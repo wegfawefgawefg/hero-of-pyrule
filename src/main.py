@@ -3,6 +3,8 @@ from pprint import pprint
 import pygame
 import glm
 
+from src.entity_templates import player_template
+from src.screens.screens import Screen, ScreenType
 from src.process_inputs import process_inputs
 from src.render import meta_render, render
 from src.graphics import Graphics
@@ -19,10 +21,13 @@ def main():
         joystick.init()
 
     state = State()
+
     graphics = Graphics()
     audio = Audio()
 
-    state.load_stage(a_a())
+    state.stage.load_from_screen_data(ScreenType.START)
+    state.stage.entities.append(player_template())
+
     audio.events.append(PlaySong(Music.PLAY))
 
     clock = pygame.time.Clock()

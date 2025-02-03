@@ -14,6 +14,7 @@ from src.sprites.sprite_definitions import (
     GOOMBA_WALKING,
     GOOMBINI_WALKING,
     GOOMBOR_WALKING,
+    PLAYER_DOWN,
 )
 from src.tiles import TILE_SIZE
 
@@ -21,17 +22,13 @@ from src.tiles import TILE_SIZE
 def player_template():
     player = Entity()
     player.type = EntityType.PLAYER
-    player.pos = glm.vec2(4 * TILE_SIZE, 2 * TILE_SIZE)
-    player.size = glm.vec2(8, 12)
+    player.pos = glm.vec2(6 * TILE_SIZE, 5 * TILE_SIZE)
+    player.size = glm.vec2(8, 16)
 
     player.vel = glm.vec2(0, 0)
     player.acc = glm.vec2(0, 0)
-    player.input_controlled = (True,)
-    player.display_state = DisplayState.NEUTRAL
-    player.sprite_animator = SpriteAnimator(
-        SpriteFamily.PLAYER,
-        PLAYER_STANDING,
-    )
+    player.input_controlled = True
+    player.sprite_animator = SpriteAnimator(PLAYER_DOWN)
 
     player.coyote_timer = CoyoteTimer(6)
     player.always_active = True

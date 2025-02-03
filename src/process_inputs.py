@@ -13,9 +13,6 @@ def get_playing_inputs() -> PlayingInputs:
     playing_inputs.up = pygame.key.get_pressed()[pygame.K_w]
     playing_inputs.down = pygame.key.get_pressed()[pygame.K_s]
 
-    playing_inputs.run = pygame.key.get_pressed()[pygame.K_LSHIFT]
-    playing_inputs.jump = pygame.key.get_pressed()[pygame.K_SPACE]
-
     playing_inputs.pause = pygame.key.get_pressed()[pygame.K_RETURN]
 
     playing_inputs.camera_left = pygame.key.get_pressed()[pygame.K_LEFT]

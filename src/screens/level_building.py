@@ -1,14 +1,4 @@
-from enum import Enum, auto
-import inspect
 from pprint import pprint
-import random
-
-import glm
-
-from src.sprites.sprite_animator import BasicSpriteAnimator
-from src.sprites.sprite_definitions import FLOWER, MINI_HILL
-from src.stage import Decoration
-from src.tiles import TILE_SIZE, Tile, is_tile_collidable
 
 
 def fill_area_with(tiles, tl, br, tile):

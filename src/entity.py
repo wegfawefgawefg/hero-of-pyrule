@@ -1,6 +1,7 @@
 from enum import Enum, auto
 import glm
 
+from src.sprites.sprite_animator import SpriteAnimator
 from src.tiles import TILE_SIZE
 
 
@@ -14,6 +15,8 @@ class EntityType(Enum):
 class Facing(Enum):
     LEFT = auto()
     RIGHT = auto()
+    UP = auto()
+    DOWN = auto()
 
 
 class Entity:
@@ -24,12 +27,12 @@ class Entity:
         self.vel = glm.vec2(0, 0)
         self.acc = glm.vec2(0, 0)
         self.input_controlled = False
-        self.sprite_animator = None
+        self.sprite_animator: SpriteAnimator = None
         self.no_gravity = False
-        self.facing = Facing.RIGHT
+        self.facing = Facing.DOWN
+        self.rotate_to_facing = False  # TODO: some entities have explicit direction sprites and some just rotate to face direction
         self.has_tile_collisions = True
         self.has_entity_collisions = True
-        self.grounded = False
         self.always_active = False
         self.is_sticky_platform = (
             False  # is true if the entity moves entities on top of it

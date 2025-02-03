@@ -42,7 +42,7 @@ def do_collisions_vertical(
     state: State, entity, pos: ivec2, size: ivec2, vel: vec2
 ) -> None | float:
     """Returns the new y position if collided, False otherwise"""
-    stage = state.screen
+    stage = state.stage
 
     y_vel = vel.y
     if y_vel > 0:
@@ -119,7 +119,7 @@ def do_collisions_horizontal(
     state: State, entity, pos: ivec2, size: ivec2, vel: vec2
 ) -> None | float:
     """Returns the new x position if collided, False otherwise"""
-    stage = state.screen
+    stage = state.stage
 
     x_vel = vel.x
     if x_vel > 0:
@@ -196,7 +196,6 @@ def do_entity_collisions_vertical(
     state: State, entity, pos: ivec2, size: ivec2, vel: vec2
 ) -> None | float:
     """Returns the new y position if collided, False otherwise"""
-    stage = state.screen
 
     y_vel = vel.y
     if y_vel > 0:
@@ -211,7 +210,7 @@ def do_entity_collisions_vertical(
 
     # find intersected entities
     intersected_entities = []
-    for oe in state.active_entities:
+    for oe in state.stage.entities:
         if oe == entity:
             continue
         oe_tl, oe_br = get_entity_bounds(oe.pos, oe.size)
@@ -258,7 +257,7 @@ def do_entity_collisions_horizontal(
     state: State, entity, pos: ivec2, size: ivec2, vel: vec2
 ) -> None | float:
     """Returns the new x position if collided, None otherwise"""
-    stage = state.screen
+    stage = state.stage
 
     x_vel = vel.x
     if x_vel > 0:
@@ -273,7 +272,7 @@ def do_entity_collisions_horizontal(
 
     # find intersected entities
     intersected_entities = []
-    for oe in state.active_entities:
+    for oe in state.stage.entities:
         if oe == entity:
             continue
         oe_tl, oe_br = get_entity_bounds(oe.pos, oe.size)

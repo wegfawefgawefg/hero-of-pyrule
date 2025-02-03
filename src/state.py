@@ -1,7 +1,8 @@
 from enum import Enum, auto
-from entity import get_entity_bounds
+from typing import List
 
-from stage import Screen
+from src.screens.screens import SCREENS, ScreenType
+from src.stage import Stage
 
 
 class Mode(Enum):
@@ -25,8 +26,7 @@ class State:
     def __init__(self) -> None:
         self.mode = Mode.PLAYING
 
-        self.screen: Screen = None
-        self.entities = []
+        self.stage = Stage()
 
         self.events = []
         self.special_effects = []
@@ -35,10 +35,6 @@ class State:
         self.alerts: list[Message] = []
 
         self.center_cam_on_player = True
-
-    def load_screen(self, screen):
-        self.screen = screen
-        self.entities = screen.entities
 
     def step_alerts(self):
         self.alerts = step_and_cleanse(self.alerts)

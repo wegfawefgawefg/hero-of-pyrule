@@ -8,36 +8,28 @@ from src.state import Mode
 from src.systems.ai import step_ai
 from src.systems.animations import (
     set_facing,
+    set_facing_sprite_for_non_rotators,
     step_sprite_animators,
-    update_display_states,
 )
 from src.systems.control import (
     center_cam_on_player,
     control_camera,
     control_entities,
     speed_limit_controlled_entities,
-    step_coyote_timers,
 )
-from systems.debug import debug_collisions
-from systems.physics import (
-    gravity,
+from src.systems.debug import debug_collisions
+from src.systems.physics import (
     physics_post_step,
-    set_grounded,
     zero_accelerations,
 )
-from systems.progression import exit_if_player_hits_exit_tile
 
 
 def step_playing(state, graphics, audio):
-    state.set_active_entities(graphics.camera)
 
     #### PRE STEP
     # control_camera(state, graphics)
-    update_display_states(state)
+    # update_display_states(state)
     zero_accelerations(state)
-    gravity(state)
-    set_grounded(state)
-    step_coyote_timers(state)
 
     ### STEP
     control_entities(state)
@@ -48,8 +40,8 @@ def step_playing(state, graphics, audio):
     physics_post_step(state)
 
     set_facing(state)
+    set_facing_sprite_for_non_rotators(state)
     step_sprite_animators(state, graphics)
-    exit_if_player_hits_exit_tile(state)
 
     center_cam_on_player(state, graphics)
 
@@ -59,7 +51,7 @@ def step_playing(state, graphics, audio):
 
 def some_debug_messages(state, graphics):
     # print player position
-    player_entities = [e for e in state.entities if e.type == EntityType.PLAYER]
+    player_entities = [e for e in state.stage.entities if e.type == EntityType.PLAYER]
     if len(player_entities) > 0:
         player = player_entities[0]
         state.debug_messages.append(f"player pos: {player.pos}")
@@ -79,9 +71,6 @@ def some_debug_messages(state, graphics):
     if len(player_entities) > 0:
         player = player_entities[0]
         state.debug_messages.append(f"coyote timer: {player.coyote_timer.timer}")
-
-    # print player grounded
-    state.debug_messages.append(f"player grounded: {player.grounded}")
 
     # print mouse pos
     state.debug_messages.append(f"mouse pos: {mouse_pos(graphics)}")

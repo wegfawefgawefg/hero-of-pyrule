@@ -8,6 +8,6 @@ def debug_collisions(state: State):
     # state.debug_messages.append("Test Debug Message")
     for event in state.events:
         state.debug_messages.append(str(event))
-    for e in state.active_entities:
+    for e in state.stage.entities:
         # entity positions
         state.debug_messages.append(f"{e.type} pos: {e.pos}")

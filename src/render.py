@@ -6,17 +6,17 @@ from src.entity import EntityType, Facing, get_entity_feet
 from src.graphics import Textures
 
 from src.state import Mode
-from src.tiles import TILE_SIZE, get_tile_texture_sample_position, is_tile_transparent
+from src.tiles import TILE_SIZE, get_tile_texture_sample_position
 
 
 def render_playing(state, graphics):
     render_tiles(state, graphics)
-    render_background_decorations(state, graphics)
+    # render_background_decorations(state, graphics)
     # render_crosshair(state, graphics)
     render_entites(state, graphics)
-    render_foreground_decorations(state, graphics)
-    render_alerts(state, graphics)
-    render_ui(state, graphics)
+    # render_foreground_decorations(state, graphics)
+    # render_alerts(state, graphics)
+    # render_ui(state, graphics)
 
 
 def render_crosshair(state, graphics):
@@ -67,13 +67,6 @@ def render_tiles(state, graphics):
             sample_pos = get_tile_texture_sample_position(tile) * TILE_SIZE
 
             render_pos = glm.vec2(x, y) * TILE_SIZE - cam.pos
-            # if tile is transparent, render an air beneath it
-            if is_tile_transparent(tile):
-                graphics.render_surface.blit(
-                    tiles_texture,
-                    (render_pos.x, render_pos.y, TILE_SIZE, TILE_SIZE),
-                    (0, 0, TILE_SIZE, TILE_SIZE),
-                )
             graphics.render_surface.blit(
                 tiles_texture,
                 (render_pos.x, render_pos.y, TILE_SIZE, TILE_SIZE),
@@ -139,7 +132,7 @@ def render_entites(state, graphics):
     br = cam.pos + cam.size
 
     entities_texture = graphics.assets.get(Textures.ENTITIES)
-    for entity in state.entities:
+    for entity in state.stage.entities:
         entity_tl = entity.pos
         entity_br = entity.pos + entity.size
 

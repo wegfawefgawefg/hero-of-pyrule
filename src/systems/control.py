@@ -20,7 +20,7 @@ def control_camera(state, graphics):
 def center_cam_on_player(state, graphics):
     if not state.center_cam_on_player:
         return
-    player_entities = [e for e in state.active_entities if e.type == EntityType.PLAYER]
+    player_entities = [e for e in state.stage.entities if e.type == EntityType.PLAYER]
     if len(player_entities) == 0:
         return
     xs = [e.pos.x + e.size.x / 2 for e in player_entities]
@@ -43,56 +43,36 @@ def center_cam_on_player(state, graphics):
             graphics.camera.pos.x = stage_right_edge - graphics.camera.size.x
 
 
-WALK_FORCE = 0.2
+WALK_FORCE = 0.3
 RUN_FORCE = 0.5
 JUMP_FORCE = -3.6
 RUNNING_JUMP_FORCE = -4.8
 
 
 def control_entities(state):
-    controllable_entities = [e for e in state.active_entities if e.input_controlled]
+    controllable_entities = [e for e in state.stage.entities if e.input_controlled]
     for e in controllable_entities:
         if state.inputs.left:
-            if state.inputs.run:
-                e.acc.x -= RUN_FORCE
-            else:
-                e.acc.x -= WALK_FORCE
+            e.acc.x -= WALK_FORCE
         if state.inputs.right:
-            if state.inputs.run:
-                e.acc.x += RUN_FORCE
-            else:
-                e.acc.x += WALK_FORCE
-
-        # if state.inputs.up:
-        #     e.acc.y -= move_force
-        # if state.inputs.down:
-        #     e.acc.y += move_force
-        if state.inputs.jump:
-            if e.grounded or e.coyote_timer is not None and e.coyote_timer.can_jump():
-                if state.inputs.run and abs(e.vel.x) > (RUNNER_MAX_SPEED - 0.5):
-                    e.vel.y = RUNNING_JUMP_FORCE
-                else:
-                    e.vel.y = JUMP_FORCE
-                e.grounded = False
-                if e.coyote_timer is not None:
-                    e.coyote_timer.timer = 0
+            e.acc.x += WALK_FORCE
+        if state.inputs.down:
+            e.acc.y += WALK_FORCE
+        if state.inputs.up:
+            e.acc.y -= WALK_FORCE
 
 
-no_move_force = 0.3
-WALKER_MAX_SPEED = 2.0
-RUNNER_MAX_SPEED = 3.0
+no_move_force = 0.8
+WALKING_MAX_SPEED = 1.0
 
 
 def speed_limit_controlled_entities(state):
-    controllable_entities = [e for e in state.active_entities if e.input_controlled]
+    controllable_entities = [e for e in state.stage.entities if e.input_controlled]
 
     for e in controllable_entities:
         if e.input_controlled:
             if state.inputs.right:
-                if state.inputs.run:
-                    e.vel.x = min(e.vel.x, RUNNER_MAX_SPEED)
-                else:
-                    e.vel.x = min(e.vel.x, WALKER_MAX_SPEED)
+                e.vel.x = min(e.vel.x, WALKING_MAX_SPEED)
             else:
                 # slow down
                 if e.vel.x > 0:
@@ -100,22 +80,22 @@ def speed_limit_controlled_entities(state):
                 pass
 
             if state.inputs.left:
-                if state.inputs.run:
-                    e.vel.x = max(e.vel.x, -RUNNER_MAX_SPEED)
-                else:
-                    e.vel.x = max(e.vel.x, -WALKER_MAX_SPEED)
+                e.vel.x = max(e.vel.x, -WALKING_MAX_SPEED)
             else:
                 # slow down
                 if e.vel.x < 0:
                     e.acc.x = max(no_move_force, e.vel.x)
 
+            if state.inputs.up:
+                e.vel.y = max(e.vel.y, -WALKING_MAX_SPEED)
+            else:
+                # slow down
+                if e.vel.y < 0:
+                    e.acc.y = max(no_move_force, e.vel.y)
 
-def step_coyote_timers(state):
-    for e in state.active_entities:
-        if e.coyote_timer is None:
-            continue
-
-        if e.grounded:
-            e.coyote_timer.reset()
-        else:
-            e.coyote_timer.step()
+            if state.inputs.down:
+                e.vel.y = min(e.vel.y, WALKING_MAX_SPEED)
+            else:
+                # slow down
+                if e.vel.y > 0:
+                    e.acc.y = max(-no_move_force, -e.vel.y)

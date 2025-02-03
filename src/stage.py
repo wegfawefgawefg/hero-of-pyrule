@@ -5,7 +5,8 @@ import random
 
 import glm
 
-from src.screens.screens import Screens
+from src.screens.level_building import parse_map_tiles_string
+from src.screens.screens import SCREENS, ScreenType
 from src.entity import Entity, EntityType
 from src.entity_templates import player_template
 from src.sprites.sprite_animator import SpriteAnimator
@@ -45,19 +46,25 @@ class SpecialDecoration(Decoration):
 
 
 class Warp:
-    def __init__(self, pos: glm.uvec2, target_screen: Screens, target_pos: glm.uvec2):
+    def __init__(
+        self, pos: glm.uvec2, target_screen: ScreenType, target_pos: glm.uvec2
+    ):
         self.pos = pos
         self.target_screen = target_screen
         self.target_pos = target_pos
 
 
-class Screen:
-    def __init__(self, name="", coord=glm.uvec2(0, 0)):
-        self.name: str = name
-        self.coord: glm.uvec2 = coord
+class Stage:
+    def __init__(self):
+        self.name: str = "UNNAMED"
+        self.screen_type: ScreenType = None
         self.entities: list[Entity] = []
-        self.warps: list[Warp] = []
         self.tiles: list[list[Tile]] = []
+
+        self.left_stage: ScreenType = None
+        self.right_stage: ScreenType = None
+        self.up_stage: ScreenType = None
+        self.down_stage: ScreenType = None
 
         self.foreground_decorations = []
 
@@ -70,6 +77,19 @@ class Screen:
     def wc_dims(self):
         """Returns the dimensions of the stage in world coordinates"""
         return self.dims * TILE_SIZE
+
+    def load_from_screen_data(self, screen_type: ScreenType):
+        screen = SCREENS.get(screen_type)
+        if screen is None:
+            raise ValueError(f"Screen {screen_type} not found in SCREENS")
+
+        self.screen_type = screen_type
+        self.tiles = parse_map_tiles_string(screen.tiles_string)
+        self.entities = [entity.clone() for entity in screen.entities]
+        self.left_stage = screen.left
+        self.right_stage = screen.right
+        self.up_stage = screen.up
+        self.down_stage = screen.down
 
     def add_foreground_decoration(self, decoration):
         self.foreground_decorations.append(decoration)

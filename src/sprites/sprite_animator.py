@@ -28,7 +28,7 @@ class SpriteAnimator:
     def set_sprite(self, sprite: Sprite):
         self.sprite = sprite
         self.current_frame %= sprite.get_num_frames()
-        self.countdown_timer = self.frame_duration
+        # self.countdown_timer = self.frame_duration
 
     def reset_speed(self):
         self.frame_duration = DEFAULT_FRAME_DURATION

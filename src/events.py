@@ -4,7 +4,7 @@ from src.audio import Audio, Music, PlaySong
 from src.entity import EntityType
 from src.graphics import Graphics
 from src.state import State
-from src.systems.control import WALK_FORCE, WALKER_MAX_SPEED
+from src.systems.control import WALK_FORCE, WALKING_MAX_SPEED
 
 
 class Event:
@@ -47,12 +47,12 @@ def handle_events(state: State, graphics: Graphics, audio: Audio):
             case LevelWon():
                 # play a level win sound
                 audio.events.append(PlaySong(Music.WIN))
-                for e in state.entities:
+                for e in state.stage.entities:
                     if e.type == EntityType.PLAYER:
                         e.input_controlled = False
                         e.has_collisions = False
                         e.no_gravity = True
-                        e.vel.x = WALKER_MAX_SPEED
+                        e.vel.x = WALKING_MAX_SPEED
                         e.invincible = True
                         state.center_cam_on_player = False
 

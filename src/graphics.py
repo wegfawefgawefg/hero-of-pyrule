@@ -44,7 +44,7 @@ class Graphics:
 @loader(pygame.image.load, path="assets/graphics/")
 class Textures(Enum):
     ENTITIES = "entities/entities.png"
-    TILES = "tiles/land.png"
+    TILES = "tiles/tiles.png"
     DECORATIONS = "decorations/decorations.png"
     OVERWORLD_ENEMIES = "entities/overworld_enemies.png"
     LINK = "entities/link.png"

@@ -11,7 +11,7 @@ from src.tiles import Tile
 """
 
 
-class Screens(Enum):
+class ScreenType(Enum):
     START = auto()
 
 
@@ -19,10 +19,10 @@ class Screens(Enum):
 class Screen:
     tiles_string: str
     entities: List[Entity]
-    left: Screens
-    right: Screens
-    up: Screens
-    down: Screens
+    left: ScreenType
+    right: ScreenType
+    up: ScreenType
+    down: ScreenType
 
 
 LETTER_TO_TILE_KEY = {
@@ -46,21 +46,20 @@ rddddddddddddddr
 rddddddddddddddr
 rddddddddddddddr
 rddddddddddddddr
-rddddddddddddddr
 dddddddddddddddd
-rddddddddddddddr
+dddddddddddddddd
 rddddddddddddddr
 rddddddddddddddr
 rddddddddddddddr
 rrrrrrrrrrrrrrrr
 """,
     [],
-    Screens.START,
-    Screens.START,
-    Screens.START,
-    Screens.START,
+    ScreenType.START,
+    ScreenType.START,
+    ScreenType.START,
+    ScreenType.START,
 )
 
 SCREENS = {
-    Screens.START: SCREEN_START,
+    ScreenType.START: SCREEN_START,
 }
