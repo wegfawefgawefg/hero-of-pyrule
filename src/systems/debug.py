@@ -1,6 +1,6 @@
 from sre_parse import State
 
-from state import Message
+from src.state import Message
 
 
 def debug_collisions(state: State):

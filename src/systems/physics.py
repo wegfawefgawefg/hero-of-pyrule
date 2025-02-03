@@ -1,13 +1,13 @@
 import glm
-from collisions import (
+
+from src.collisions import (
     do_collisions_horizontal,
     do_collisions_vertical,
     do_entity_collisions_horizontal,
     do_entity_collisions_vertical,
 )
-from entity import get_entity_bounds, get_entity_feet, intersects
-
-from tiles import TILE_SIZE, collidable_tile_in_list
+from src.entity import get_entity_bounds, get_entity_feet, intersects
+from src.tiles import TILE_SIZE, collidable_tile_in_list
 
 
 def zero_accelerations(state):

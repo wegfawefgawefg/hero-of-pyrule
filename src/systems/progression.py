@@ -1,22 +1,22 @@
 from pprint import pprint
 
-from entity import EntityType, get_entity_bounds
-from events import LevelWon
-from state import Message, State
-from tiles import TILE_SIZE
+from src.entity import EntityType, get_entity_bounds
+from src.events import LevelWon
+from src.state import Message, State
+from src.tiles import TILE_SIZE
 
 
 def exit_if_player_hits_exit_tile(state: State):
-    if state.stage.won == True:
+    if state.screen.won == True:
         return
 
     for e in state.active_entities:
         if e.type == EntityType.PLAYER:
             player_tile_pos = e.pos // TILE_SIZE
             player_tile_pos_tuple = (player_tile_pos.x, player_tile_pos.y)
-            if player_tile_pos_tuple in state.stage.exits:
-                state.stage.won = True
-                exit = state.stage.exits[player_tile_pos_tuple]
+            if player_tile_pos_tuple in state.screen.exits:
+                state.screen.won = True
+                exit = state.screen.exits[player_tile_pos_tuple]
                 state.events.append(LevelWon(exit.goes_to))
                 state.alerts.append(Message("Level complete!", 60))
 

@@ -1,7 +1,7 @@
 import pygame
 
-from inputs import PauseInputs, PlayingInputs
-from state import Mode
+from src.inputs import PauseInputs, PlayingInputs
+from src.state import Mode
 
 
 def get_playing_inputs() -> PlayingInputs:

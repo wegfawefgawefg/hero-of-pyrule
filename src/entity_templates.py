@@ -1,22 +1,21 @@
 import random
 import glm
-from ai import (
+
+from src.ai import (
     ChangeDirectionWhenImpeded,
     PatrolForDuration,
     WalkLeftOrRight,
     WalkRandomlySometimes,
 )
-from components import CoyoteTimer
-from entity import DisplayState, Entity, EntityType, Facing
-from sprites.sprite_animator import SpriteAnimator
-from sprites.sprite_definitions import (
+from src.components import CoyoteTimer
+from src.entity import Entity, EntityType, Facing
+from src.sprites.sprite_animator import SpriteAnimator
+from src.sprites.sprite_definitions import (
     GOOMBA_WALKING,
     GOOMBINI_WALKING,
     GOOMBOR_WALKING,
-    PLAYER_STANDING,
-    SpriteFamily,
 )
-from tiles import TILE_SIZE
+from src.tiles import TILE_SIZE
 
 
 def player_template():

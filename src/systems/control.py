@@ -1,7 +1,7 @@
 import glm
 
-from entity import EntityType
-from tiles import TILE_SIZE
+from src.entity import EntityType
+from src.tiles import TILE_SIZE
 
 
 def control_camera(state, graphics):

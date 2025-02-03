@@ -3,13 +3,12 @@ from pprint import pprint
 import pygame
 import glm
 
-from process_inputs import process_inputs
-from render import meta_render, render
-from graphics import Graphics
-from stages.a_a import a_a
-from state import State
-from audio import Audio, Music, PlaySong
-from step import step
+from src.process_inputs import process_inputs
+from src.render import meta_render, render
+from src.graphics import Graphics
+from src.state import State
+from src.audio import Audio, Music, PlaySong
+from src.step import step
 
 pygame.init()
 

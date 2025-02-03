@@ -1,6 +1,6 @@
-from entity import DisplayState, Facing, get_entity_bounds
-from sprites.sprite_animator import DEFAULT_FRAME_DURATION
-from tiles import TILE_SIZE
+from src.entity import DisplayState, Facing, get_entity_bounds
+from src.sprites.sprite_animator import DEFAULT_FRAME_DURATION
+from src.tiles import TILE_SIZE
 
 
 def step_sprite_animators(state, graphics):

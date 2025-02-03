@@ -1,11 +1,10 @@
-import pygame
 from glm import ceil, floor, vec2, ivec2
-from entity import Entity, get_entity_bounds, intersects
-from events import Side
-from state import State
 
-from tiles import TILE_SIZE, is_tile_collidable
-from events import EntityTileCollision
+from src.entity import Entity, get_entity_bounds, intersects
+from src.events import Side
+from src.state import State
+from src.tiles import TILE_SIZE, is_tile_collidable
+from src.events import EntityTileCollision
 
 
 class TileCoordPair:
@@ -43,7 +42,7 @@ def do_collisions_vertical(
     state: State, entity, pos: ivec2, size: ivec2, vel: vec2
 ) -> None | float:
     """Returns the new y position if collided, False otherwise"""
-    stage = state.stage
+    stage = state.screen
 
     y_vel = vel.y
     if y_vel > 0:
@@ -120,7 +119,7 @@ def do_collisions_horizontal(
     state: State, entity, pos: ivec2, size: ivec2, vel: vec2
 ) -> None | float:
     """Returns the new x position if collided, False otherwise"""
-    stage = state.stage
+    stage = state.screen
 
     x_vel = vel.x
     if x_vel > 0:
@@ -197,7 +196,7 @@ def do_entity_collisions_vertical(
     state: State, entity, pos: ivec2, size: ivec2, vel: vec2
 ) -> None | float:
     """Returns the new y position if collided, False otherwise"""
-    stage = state.stage
+    stage = state.screen
 
     y_vel = vel.y
     if y_vel > 0:
@@ -259,7 +258,7 @@ def do_entity_collisions_horizontal(
     state: State, entity, pos: ivec2, size: ivec2, vel: vec2
 ) -> None | float:
     """Returns the new x position if collided, None otherwise"""
-    stage = state.stage
+    stage = state.screen
 
     x_vel = vel.x
     if x_vel > 0:

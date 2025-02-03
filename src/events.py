@@ -1,10 +1,10 @@
 from enum import Enum
-from audio import Audio, Music, PlaySong
-from entity import EntityType
-from graphics import Graphics
 
-from state import State
-from systems.control import WALK_FORCE, WALKER_MAX_SPEED
+from src.audio import Audio, Music, PlaySong
+from src.entity import EntityType
+from src.graphics import Graphics
+from src.state import State
+from src.systems.control import WALK_FORCE, WALKER_MAX_SPEED
 
 
 class Event:

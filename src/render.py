@@ -1,11 +1,12 @@
 from math import ceil
 import pygame
 import glm
-from entity import EntityType, Facing, get_entity_feet
-from graphics import Textures
 
-from state import Mode
-from tiles import TILE_SIZE, get_tile_texture_sample_position, is_tile_transparent
+from src.entity import EntityType, Facing, get_entity_feet
+from src.graphics import Textures
+
+from src.state import Mode
+from src.tiles import TILE_SIZE, get_tile_texture_sample_position, is_tile_transparent
 
 
 def render_playing(state, graphics):

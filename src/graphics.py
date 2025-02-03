@@ -5,7 +5,7 @@ import glm
 import pygame
 from small_ass_cache import AssetCache, loader
 
-from tiles import TILE_SIZE
+from src.tiles import TILE_SIZE
 
 
 class Camera:

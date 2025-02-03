@@ -1,12 +1,8 @@
 import random
 
 import glm
-from entity import DisplayState
-from sprites.sprite import Sprite
-from sprites.sprite_definitions import (
-    SpriteFamily,
-    get_sprite_for_display_state_given_family,
-)
+
+from src.sprites.sprite import Sprite
 
 
 DEFAULT_FRAME_DURATION = 8  # animation changes every 4 frames
@@ -17,8 +13,7 @@ class SpriteAnimator:
     It has routing for families and display states, which are like the nodes in a state machine.
     """
 
-    def __init__(self, sprite_family: SpriteFamily, sprite: Sprite):
-        self.sprite_family = sprite_family
+    def __init__(self, sprite: Sprite):
         self.sprite = sprite
         self.current_frame = 0
         self.countdown_timer = DEFAULT_FRAME_DURATION
@@ -29,12 +24,6 @@ class SpriteAnimator:
 
     def get_frame_offset(self) -> glm.vec2:
         return self.sprite.get_frame_offset(self.current_frame)
-
-    def update_sprite_based_on_display_state(self, display_state: DisplayState):
-        sprite = get_sprite_for_display_state_given_family(
-            self.sprite_family, display_state
-        )
-        self.set_sprite(sprite)
 
     def set_sprite(self, sprite: Sprite):
         self.sprite = sprite

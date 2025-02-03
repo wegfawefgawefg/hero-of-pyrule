@@ -1,7 +1,7 @@
 from enum import Enum, auto
 import glm
 
-from tiles import TILE_SIZE
+from src.tiles import TILE_SIZE
 
 
 class EntityType(Enum):
@@ -9,16 +9,6 @@ class EntityType(Enum):
     GOOMBA = auto()
     GOOMBINI = auto()
     GOOMBOR = auto()
-
-
-class DisplayState(Enum):
-    NEUTRAL = auto()
-    WALKING = auto()
-    JUMPING = auto()
-    FALLING = auto()
-    CLIMBING = auto()
-    STUNNED = auto()
-    DEAD = auto()
 
 
 class Facing(Enum):
@@ -34,7 +24,6 @@ class Entity:
         self.vel = glm.vec2(0, 0)
         self.acc = glm.vec2(0, 0)
         self.input_controlled = False
-        self.display_state = DisplayState.NEUTRAL
         self.sprite_animator = None
         self.no_gravity = False
         self.facing = Facing.RIGHT

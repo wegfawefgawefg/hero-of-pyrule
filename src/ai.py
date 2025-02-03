@@ -1,7 +1,7 @@
 from enum import Enum, auto
 import random
 
-from audio import PlaySound, Sounds
+from src.audio import PlaySound, Sounds
 
 
 class AI:

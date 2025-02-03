@@ -1,8 +1,7 @@
 from enum import Enum
-import time
-from small_ass_cache import AssetCache, loader
 
 import pygame
+from small_ass_cache import AssetCache, loader
 
 
 def load_sound(path):

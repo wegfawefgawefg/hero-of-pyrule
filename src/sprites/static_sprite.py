@@ -1,6 +1,6 @@
 import glm
 
-from sprites.sprite import Sprite
+from src.sprites.sprite import Sprite
 
 
 class StaticSprite(Sprite):

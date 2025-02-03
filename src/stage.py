@@ -4,11 +4,12 @@ from pprint import pprint
 import random
 
 import glm
-from entity import DisplayState, Entity, EntityType
-from entity_templates import player_template
-from sprites.sprite_animator import SpriteAnimator
-from sprites.sprite_definitions import PLAYER_STANDING, SpriteFamily
-from tiles import TILE_SIZE, Tile
+
+from src.screens.screens import Screens
+from src.entity import Entity, EntityType
+from src.entity_templates import player_template
+from src.sprites.sprite_animator import SpriteAnimator
+from src.tiles import TILE_SIZE, Tile
 
 
 class TileCoordPair:
@@ -43,13 +44,20 @@ class SpecialDecoration(Decoration):
             self.sprite_animator.step()
 
 
+class Warp:
+    def __init__(self, pos: glm.uvec2, target_screen: Screens, target_pos: glm.uvec2):
+        self.pos = pos
+        self.target_screen = target_screen
+        self.target_pos = target_pos
+
+
 class Screen:
-    def __init__(self):
-        self.coord = glm.uvec2(0, 0)  # define this
-        self.name = None  # is used for warps
-        self.entities = []
-        self.warps = {}
-        self.tiles = None
+    def __init__(self, name="", coord=glm.uvec2(0, 0)):
+        self.name: str = name
+        self.coord: glm.uvec2 = coord
+        self.entities: list[Entity] = []
+        self.warps: list[Warp] = []
+        self.tiles: list[list[Tile]] = []
 
         self.foreground_decorations = []
 
@@ -65,23 +73,6 @@ class Screen:
 
     def add_foreground_decoration(self, decoration):
         self.foreground_decorations.append(decoration)
-
-    def set_tiles(self, tiles):
-        self.tiles = tiles
-
-    def add_exit(self, pos, goes_to, level_win=False):
-        print(self.dims)
-        # make sure pos in range
-        if pos.x < 0 or pos.x >= self.dims.x or pos.y < 0 or pos.y >= self.dims.y:
-            raise Exception("win tile pos out of the stage!!!")
-        self.tiles[pos.y][pos.x] = Tile.EXIT
-        self.exits[pos.to_tuple()] = Exit(goes_to, level_win)
-
-    def get_exit(self, pos):
-        return self.exits.get(pos.as_tuple())
-
-    def set_entities(self, entities):
-        self.entities = entities
 
     def get_height(self):
         """Returns the height of the stage in world coordinates"""

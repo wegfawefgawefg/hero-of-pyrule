@@ -1,14 +1,17 @@
 import pygame
-from audio import handle_audio_events
-from entity import EntityType
-from events import handle_events
-from render import mouse_pos
 
-from state import Mode
-import systems
-from systems.ai import step_ai
-from systems.animations import set_facing, step_sprite_animators, update_display_states
-from systems.control import (
+from src.audio import handle_audio_events
+from src.entity import EntityType
+from src.events import handle_events
+from src.render import mouse_pos
+from src.state import Mode
+from src.systems.ai import step_ai
+from src.systems.animations import (
+    set_facing,
+    step_sprite_animators,
+    update_display_states,
+)
+from src.systems.control import (
     center_cam_on_player,
     control_camera,
     control_entities,
