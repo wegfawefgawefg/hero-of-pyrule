@@ -1,4 +1,8 @@
 {
-    "python.analysis.importFormat": "absolute"
+    "python.analysis.importFormat": "absolute",
+    "python.linting.enabled": true,
+    "python.linting.ruffEnabled": true,
+    "python.linting.ruffArgs": [],
+    "python.linting.ruffPath": "ruff"  // Optional: specify the full path if needed
 }
   
