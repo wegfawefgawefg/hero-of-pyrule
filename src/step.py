@@ -22,6 +22,7 @@ from src.systems.physics import (
     physics_post_step,
     zero_accelerations,
 )
+from src.systems.progression import check_stage_edge
 
 
 def step_playing(state, graphics, audio):
@@ -44,6 +45,7 @@ def step_playing(state, graphics, audio):
     step_sprite_animators(state, graphics)
 
     center_cam_on_player(state, graphics)
+    check_stage_edge(state)
 
     # some_debug_messages(state, graphics)
     # debug_collisions(state)

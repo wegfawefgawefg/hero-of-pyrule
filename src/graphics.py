@@ -24,7 +24,7 @@ class Graphics:
     def __init__(self):
         self.render_resolution = glm.vec2(240, 160) * 1
         self.window_size = self.render_resolution * 4
-        self.camera = Camera(glm.vec2(16 * TILE_SIZE, 9 * TILE_SIZE))
+        self.camera = Camera(glm.vec2(16 * TILE_SIZE, 11 * TILE_SIZE))
         self.camera.set_center(glm.vec2(8 * TILE_SIZE, 10 * TILE_SIZE))
 
         self.window = pygame.display.set_mode(self.window_size.to_tuple())

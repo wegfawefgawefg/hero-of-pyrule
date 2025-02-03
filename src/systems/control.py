@@ -1,7 +1,9 @@
 import glm
 
+from src.graphics import Graphics
 from src.entity import EntityType
 from src.tiles import TILE_SIZE
+from src.state import State
 
 
 def control_camera(state, graphics):
@@ -17,30 +19,37 @@ def control_camera(state, graphics):
         graphics.camera.pos.y += cam_speed
 
 
-def center_cam_on_player(state, graphics):
+def center_cam_on_player(state: State, graphics: Graphics):
     if not state.center_cam_on_player:
         return
     player_entities = [e for e in state.stage.entities if e.type == EntityType.PLAYER]
-    if len(player_entities) == 0:
+    if not player_entities:
         return
+
     xs = [e.pos.x + e.size.x / 2 for e in player_entities]
-    x = sum(xs, 0) / len(xs)
-    x = int(x) + TILE_SIZE // 2
-    y = TILE_SIZE * 4.5
+    ys = [e.pos.y + e.size.y / 2 for e in player_entities]
+    x = int(sum(xs) / len(xs)) + TILE_SIZE // 2
+    y = int(sum(ys) / len(ys)) + TILE_SIZE // 2
     p = glm.vec2(x, y)
     graphics.camera.set_center(p)
 
-    # if the stage is bigger than or equal to the cam size
+    # Clamp camera in the x dimension
     if state.stage.wc_dims.x >= graphics.camera.size.x:
-        # make sure the cam pos doesnt go left of 0,0
         if graphics.camera.pos.x < 0:
             graphics.camera.pos.x = 0
-
-        # make sure the cam right edge doesnt go past the stage right edge
         cam_right_edge = graphics.camera.pos.x + graphics.camera.size.x
         stage_right_edge = state.stage.wc_dims.x + TILE_SIZE
         if cam_right_edge > stage_right_edge:
             graphics.camera.pos.x = stage_right_edge - graphics.camera.size.x
+
+    # Clamp camera in the y dimension
+    if state.stage.wc_dims.y >= graphics.camera.size.y:
+        if graphics.camera.pos.y < 0:
+            graphics.camera.pos.y = 0
+        cam_bottom_edge = graphics.camera.pos.y + graphics.camera.size.y
+        stage_bottom_edge = state.stage.wc_dims.y + TILE_SIZE
+        if cam_bottom_edge > stage_bottom_edge:
+            graphics.camera.pos.y = stage_bottom_edge - graphics.camera.size.y
 
 
 WALK_FORCE = 0.3
