@@ -1,6 +1,12 @@
 # hero-of-pyrule
 man in location
 
+## Run with uv
+```bash
+uv sync
+uv run python -m src.main
+```
+
 ## resources
 https://dev.to/robotspacefish/game-studies-link-s-movement-in-the-legend-of-zelda-48od
 https://inventwithpython.com/blog/2012/12/10/8-bit-nes-legend-of-zelda-map-data/

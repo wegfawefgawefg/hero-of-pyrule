@@ -2,7 +2,7 @@ from math import ceil
 import pygame
 import glm
 
-from src.entity import EntityType, Facing, get_entity_feet
+from src.entity import Facing, get_entity_bounds
 from src.graphics import Textures
 
 from src.state import Mode
@@ -176,30 +176,7 @@ def render_entites(state, graphics):
             (render_pos.x, render_pos.y, sample_size.x, sample_size.y),
         )
 
-        # render the entity box
-        # draw a rect to an intermediary surface, then we blit with transparency
-        #   so we can see the entity behind the rect
-        # rect_surface = pygame.Surface(entity.size.to_tuple(), pygame.SRCALPHA)
-        # pygame.draw.rect(
-        #     rect_surface,
-        #     (255, 0, 0),
-        #     (
-        #         0,
-        #         0,
-        #         int(entity.size.x),
-        #         int(entity.size.y),
-        #     ),
-        #     1,
-        # )
-        # graphics.render_surface.blit(
-        #     rect_surface,
-        #     (
-        #         entity.pos.x - cam.pos.x,
-        #         entity.pos.y - cam.pos.y,
-        #         entity.size.x,
-        #         entity.size.y,
-        #     ),
-        # )
+        render_entity_aabb(entity, cam, graphics)
 
         # draw entity feet
         # feet_tl, feet_br = get_entity_feet(entity.pos, entity.size)
@@ -235,6 +212,19 @@ def render_entites(state, graphics):
     #     (origin_pos.x, origin_pos.y),
     #     (origin_pos.x, origin_pos.y + 8),
     # )
+
+
+def render_entity_aabb(entity, cam, graphics):
+    tl, br = get_entity_bounds(entity.pos, entity.size)
+    screen_tl = tl - cam.pos
+    width = int(br.x - tl.x + 1)
+    height = int(br.y - tl.y + 1)
+    pygame.draw.rect(
+        graphics.render_surface,
+        (255, 0, 0),
+        (int(screen_tl.x), int(screen_tl.y), width, height),
+        1,
+    )
 
 
 def mouse_pos(graphics):
