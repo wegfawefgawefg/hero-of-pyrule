@@ -1,6 +1,8 @@
 # hero-of-pyrule
 man in location
 
+![Reference image](resources/image.png)
+
 ## Run with uv
 ```bash
 uv sync
